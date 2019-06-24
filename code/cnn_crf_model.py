@@ -8,9 +8,10 @@ import os
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import sys
 
 
-base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+base_path = sys.argv[1]
 
 files = sorted(glob(os.path.join(base_path, "*.npz")))
 

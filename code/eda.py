@@ -5,10 +5,11 @@ import matplotlib.pyplot as plt
 import datetime as dt
 import collections
 import librosa
+import sys
 
-path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy/SC4061E0.npz"
+path = sys.argv[1]
 
-data = np.load(path)
+data = np.load(path, allow_pickle=True)
 
 x = data['x']
 y = data['y']
