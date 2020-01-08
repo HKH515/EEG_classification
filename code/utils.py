@@ -29,6 +29,7 @@ def gen(dict_files, aug=False):
             X = all_rows[start_index:start_index+WINDOW_SIZE, ...]
             Y = batch_data['y'][start_index:start_index+WINDOW_SIZE]
 
+
             X = np.expand_dims(X, 0)
             Y = np.expand_dims(Y, -1)
             Y = np.expand_dims(Y, 0)
@@ -36,6 +37,7 @@ def gen(dict_files, aug=False):
             if aug:
                 X = aug_X(X)
             X = rescale_array(X)
+            #print(X.shape)
 
             yield X, Y
 

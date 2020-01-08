@@ -10,7 +10,8 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 
-base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+#base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+base_path = "/home/hannes/EEG_classification/deepsleepnet_data/prepared_data"
 
 files = sorted(glob(os.path.join(base_path, "*.npz")))
 

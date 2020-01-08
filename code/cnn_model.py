@@ -9,7 +9,8 @@ from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
 
-base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+#base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+base_path = "/home/hannes/EEG_classification/deepsleepnet_data/prepared_data"
 
 files = sorted(glob(os.path.join(base_path, "*.npz")))
 
@@ -36,8 +37,9 @@ early = EarlyStopping(monitor="val_acc", mode="max", patience=20, verbose=1)
 redonplat = ReduceLROnPlateau(monitor="val_acc", mode="max", patience=5, verbose=2)
 callbacks_list = [checkpoint, early, redonplat]  # early
 
-model.fit_generator(gen(train_dict, aug=False), validation_data=gen(val_dict), epochs=100, verbose=2,
-                    steps_per_epoch=1000, validation_steps=300, callbacks=callbacks_list)
+
+model.fit_generator(gen(train_dict, aug=False), validation_data=gen(val_dict), epochs=10, verbose=2,
+                    steps_per_epoch=10, validation_steps=300, callbacks=callbacks_list)
 model.load_weights(file_path)
 
 

@@ -33,14 +33,17 @@ model = get_model_cnn_crf()
 file_path = "cnn_crf_model.h5"
 # model.load_weights(file_path)
 
-checkpoint = ModelCheckpoint(file_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+full_path = os.path.join(os.getcwd(), file_path)
+
+print("saving in %s" % full_path)
+checkpoint = ModelCheckpoint(full_path, monitor='val_acc', verbose=1, save_best_only=False, mode='max')
 early = EarlyStopping(monitor="val_acc", mode="max", patience=20, verbose=1)
 redonplat = ReduceLROnPlateau(monitor="val_acc", mode="max", patience=5, verbose=2)
 callbacks_list = [checkpoint, early, redonplat]  # early
 
-model.fit_generator(gen(train_dict, aug=False), validation_data=gen(val_dict), epochs=100, verbose=2,
-                    steps_per_epoch=1000, validation_steps=300, callbacks=callbacks_list)
-model.load_weights(file_path)
+model.fit_generator(gen(train_dict, aug=False), validation_data=gen(val_dict), epochs=1, verbose=2,
+                    steps_per_epoch=1, validation_steps=300, callbacks=callbacks_list)
+#model.load_weights(file_path)
 
 
 preds = []

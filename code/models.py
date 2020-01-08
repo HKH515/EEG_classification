@@ -1,6 +1,6 @@
 from keras import optimizers, losses, activations, models
 from keras.layers import Dense, Input, Dropout, Convolution1D, MaxPool1D, GlobalMaxPool1D, GlobalAveragePooling1D, \
-    concatenate, SpatialDropout1D, TimeDistributed, Bidirectional, LSTM
+    concatenate, SpatialDropout1D, TimeDistributed, Bidirectional, LSTM, Flatten, Reshape
 from keras_contrib.layers import CRF
 
 from utils import WINDOW_SIZE
@@ -69,6 +69,7 @@ def get_model_cnn():
     nclass = 5
 
     seq_input = Input(shape=(None, 3000, 1))
+    #seq_input = Input(shape=(3000,))
     base_model = get_base_model()
     # for layer in base_model.layers:
     #     layer.trainable = False
@@ -84,6 +85,8 @@ def get_model_cnn():
 
     #out = TimeDistributed(Dense(nclass, activation="softmax"))(encoded_sequence)
     out = Convolution1D(nclass, kernel_size=3, activation="softmax", padding="same")(encoded_sequence)
+    #out = Flatten()(out)
+    #out = Reshape((5,))(out)
 
     model = models.Model(seq_input, out)
 
@@ -105,6 +108,7 @@ def get_model_lstm():
     encoded_sequence = Bidirectional(LSTM(100, return_sequences=True))(encoded_sequence)
     #out = TimeDistributed(Dense(nclass, activation="softmax"))(encoded_sequence)
     out = Convolution1D(nclass, kernel_size=1, activation="softmax", padding="same")(encoded_sequence)
+    out = Reshape((1,1,nclass,))(out)
 
     model = models.Model(seq_input, out)
 

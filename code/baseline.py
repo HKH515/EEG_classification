@@ -3,7 +3,8 @@ from glob import glob
 import os
 from sklearn.model_selection import train_test_split
 
-base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+#base_path = "/media/ml/data_ml/EEG/deepsleepnet/data_npy"
+base_path = "/home/hannes/EEG_classification/deepsleepnet_data/prepared_data"
 
 files = glob(os.path.join(base_path, "*.npz"))
 train_val, test = train_test_split(files, test_size=0.15, random_state=1337)
